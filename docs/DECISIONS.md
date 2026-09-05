@@ -16,3 +16,11 @@ v1.5 (Kroger prices) is real — build it when we get there.
 
 Note: Harris Teeter's chain code in the API is `HART`, not "Harris Teeter" —
 `filter.chain` needs the internal code, not the storefront name.
+
+---
+
+## 2026-09-05 — CSS Modules instead of Tailwind
+
+Spec/CLAUDE.md originally called for Tailwind. Switched to CSS Modules for the
+styling approach — no utility-class build step, styles are scoped per component
+via `*.module.css`, and it's built into Next.js with zero config.
