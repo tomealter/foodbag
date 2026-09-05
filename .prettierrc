@@ -1,0 +1,22 @@
+{
+  "arrowParens": "avoid",
+  "bracketSpacing": true,
+  "endOfLine": "lf",
+  "bracketSameLine": false,
+  "plugins": ["prettier-plugin-organize-imports"],
+  "printWidth": 80,
+  "quoteProps": "as-needed",
+  "semi": true,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "all",
+  "useTabs": false,
+  "overrides": [
+    {
+      "files": ["source/01-global/icon/**/*.tsx", "source/01-global/icon/**/*.svg"],
+      "options": {
+        "plugins": []
+      }
+    }
+  ]
+}

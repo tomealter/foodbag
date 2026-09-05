@@ -39,7 +39,7 @@ Ranked. Optimize teaching for these:
 
 ## Stack
 
-Next.js (App Router, TS, Tailwind) · Supabase (Postgres, Auth, Storage, Realtime) · Vercel · Claude API (receipt parsing) · Voyage (embeddings) · Kroger API · Google Places.
+Next.js (App Router, TS, CSS Modules) · Supabase (Postgres, Auth, Storage, Realtime) · Vercel · Claude API (receipt parsing) · Voyage (embeddings) · Kroger API · Google Places.
 
 ## Hard rules (from the spec — enforce these in review)
 
