@@ -24,3 +24,8 @@ Note: Harris Teeter's chain code in the API is `HART`, not "Harris Teeter" —
 Spec/CLAUDE.md originally called for Tailwind. Switched to CSS Modules for the
 styling approach — no utility-class build step, styles are scoped per component
 via `*.module.css`, and it's built into Next.js with zero config.
+
+## 2026-09-06 — profiles table instead of extending auth.users
+
+Supabase own the auth.users - we can't add columns to it. Decision was made to create a profiles table which is a sidebar table: same as auth.users (FK with delete on cascade), holds
+household_id/email/display_name instead.
