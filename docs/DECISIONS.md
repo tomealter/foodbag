@@ -29,3 +29,34 @@ via `*.module.css`, and it's built into Next.js with zero config.
 
 Supabase own the auth.users - we can't add columns to it. Decision was made to create a profiles table which is a sidebar table: same as auth.users (FK with delete on cascade), holds
 household_id/email/display_name instead.
+
+---
+
+## 2026-09-12 — get_household_id() must be SECURITY DEFINER
+
+The `profiles` RLS policy needs to know the caller's household to filter rows.
+Naive approach: have the policy query `profiles` directly to look up
+`household_id` for `auth.uid()`. Problem: that lookup is itself a query against
+`profiles`, so it triggers the same RLS policy again — infinite recursion.
+
+Fix: pull the lookup into a `SECURITY DEFINER` function. It runs with the
+function owner's privileges instead of the caller's, so it bypasses RLS on
+`profiles` internally and just reads the row — no re-trigger, no recursion.
+
+Paired with `set search_path = ''` — required any time a function is
+`SECURITY DEFINER`, so an unqualified table name inside it can't be hijacked by
+a caller who has a table of the same name earlier in their own search path.
+Every reference inside the function is fully schema-qualified (`public.profiles`)
+because of this.
+
+---
+
+## 2026-09-12 — RLS policies are select-only for now
+
+`households` and `profiles` only have `for select` policies. No `insert`/
+`update`/`delete` policies exist yet, which means the `authenticated` role
+can't currently create or modify rows in either table (RLS is deny-by-default
+per operation type).
+
+This is deliberate, not an oversight — v0.5 hasn't built any write paths yet
+(household creation, profile edits). Add write policies when that lands.
